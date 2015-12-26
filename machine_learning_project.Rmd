@@ -1,0 +1,136 @@
+---
+title: "Practical Machine Learning Project"
+author: "BJH"
+date: "December 23, 2015"
+output: 
+  html_document: 
+    theme: cosmo
+---
+
+### Introduction
+
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement – a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset). 
+
+#### Data 
+The training data for this project are available here: https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
+
+The test data are available here: https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
+
+The data for this project come from this source: http://groupware.les.inf.puc-rio.br/har. 
+
+**The goal of this project is to predict the manner in which they did the exercise. i.e. Classe**
+
+### Data Loading and Data Set Preparation
+
+Load the data and necessary packages.
+
+```{r, results = 'hide'}
+# Load Known Packages
+library(ggplot2)
+library(caret)
+
+# Set working directory
+setwd("~/Documents/Berlyn_Coursera")
+
+# read Training data file
+training <- read.csv("./pml-training.csv", sep=",", na.strings = "NA")
+# read Testing data file
+testing <- read.csv("./pml-testing.csv", sep=",", na.strings = "NA")
+```
+
+Split training set for cross validation.
+
+```{r}
+# Set seed
+set.seed(654)
+
+# Partition training set
+train <- createDataPartition(training$classe, p = 0.7, list = FALSE)
+training_split <- training[train, ]
+testing_split <- training[-train, ]
+```
+
+
+Next, data is cleaned by removing NAs. Factors such as descriptives (user name, timestamps, etc.) and near zero variables are also removed.
+
+
+```{r}
+# remove near zero values, NAs, and descriptive factors
+
+# remove near zero variance features
+nsv <- nearZeroVar(training_split)
+training_split <- training_split[, -nsv]
+
+# remove NA vals & descriptive vars
+
+# count missing values
+cntlength <- sapply(training_split, function(x) { 
+  sum(!(is.na(x) | x == "")) 
+  })
+
+# check if missing values total less than 60%
+NAcols <- names(cntlength[cntlength < 0.6 * length(training_split$classe)])
+
+# list descriptive columns
+descriptivecols <- c("X", "user_name", "raw_timestamp_part_1", "raw_timestamp_part_2", "cvtd_timestamp", "new_window", "num_window")
+
+# columns to include are descriptive and the NAs
+excludedcols <- c(descriptivecols, NAcols)
+
+# save training_split with removed values
+training_split <- training_split[, !names(training_split) %in% excludedcols]
+```
+
+### Prediction Model Generation and Testing
+Create model using cleaned data and random forest.
+
+```{r, cache = TRUE}
+# load random forest and other required packages
+library(randomForest)
+library(e1071)
+
+# run random forest
+random_forest_model <- randomForest(classe ~ ., data = training_split, importance = TRUE, ntrees = 10)
+```
+
+Use the prediction model on the training set and the cross validation set.
+
+```{r}
+# run the prediction on the training set used to create the model
+ptraining <- predict(random_forest_model, training_split)
+print(confusionMatrix(ptraining, training_split$classe))
+
+# run the prediction on the cross validation set
+pvalidation <- predict(random_forest_model, testing_split)
+print(confusionMatrix(pvalidation, testing_split$classe))
+
+# check the actual distribution of classes amongst the test set
+table(testing_split$classe)
+```
+
+
+
+**The accuracy of the cross validation set is 99.51%.  Therefore, the out of sample error is only 0.49%, indicating a good prediction model.**
+
+
+### Results for Project Test Set
+Write and save answers for official test set.
+```{r}
+# predict answers
+ptest <- predict(random_forest_model, testing)
+ptest
+
+# save as...
+answers <- as.vector(ptest)
+
+pml_write_files = function(x) {
+  n = length(x)
+  for (i in 1:n) {
+    filename = paste0("problem_id_", i, ".txt")
+    write.table(x[i], file = filename, quote = FALSE, row.names = FALSE, 
+                col.names = FALSE)
+  }
+}
+
+pml_write_files(answers)
+```
