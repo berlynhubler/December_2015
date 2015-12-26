@@ -1,0 +1,89 @@
+Shiny App:
+Comparing Exponentials
+========================================================
+author: B.Hubler
+date: 12/23/2015
+
+
+1. About the App
+========================================================
+
+Features of the Application
+
+- Slider for changing exponential
+- Input Box to set static exponential
+- Results are plotted and displayed
+
+2. Plot Information
+========================================================
+### For the plot, x is considered to be 1:20:
+```{r, echo=FALSE}
+x <- {1:20}
+x
+```
+### y = x^m
+### where m = slider input OR static input
+### Examples...
+
+3. Example 1
+========================================================
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+x <- {1:20}
+y1 <- x
+y1 <- {x^1}
+y2 <- {x^3}
+dat <- data.frame(x,y1,y2)
+g <- ggplot(dat, aes(x))
+g + geom_point(aes(y=y2)) + geom_line(aes(y=y1))
+
+```
+
+## Static line (solid) is equal to x^1
+## Changing line (dotted) is equal to x^3
+
+4. Example 2
+========================================================
+
+```{r, echo=FALSE}
+
+x <- {1:20}
+y1 <- x
+y1 <- {x^1}
+y2 <- {x^0.5}
+dat <- data.frame(x,y1,y2)
+g <- ggplot(dat, aes(x))
+g + geom_point(aes(y=y2)) + geom_line(aes(y=y1))
+
+```
+
+## Static line (solid) is equal to x^1
+## Changing line (dotted) is equal to x^0.5
+
+5. Try it Out
+========================================================
+
+## Can you predict what the exponents are in the line below? 
+
+```{r, echo=FALSE}
+x <- {1:20}
+y1 <- x
+y1 <- {x^0}
+y2 <- {x^1}
+dat <- data.frame(x,y1,y2)
+g <- ggplot(dat, aes(x))
+g + geom_point(aes(y=y2)) + geom_line(aes(y=y1))
+```
+
+6. Conclusion
+========================================================
+
+- The app illustrates the affect of exponent on the slope of the line.
+- Try for yourself!
+
+
+
+**Answer from previous slide: solid line m = 0, dotted line m = 1**
+
