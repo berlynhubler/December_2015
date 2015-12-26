@@ -1,0 +1,241 @@
+install.packages("knitr")
+library(knitr)
+library(AppliedPredictiveModeling)
+data(segmentationOriginal)
+library(caret)
+install.packages("AppliedPredictiveModeling")
+install.packages("caret")
+library("AppliedPredictiveModeling", lib.loc="~/R/R-3.2.2/library")
+library("ggplot2", lib.loc="~/R/R-3.2.2/library")
+library("knitr", lib.loc="~/R/R-3.2.2/library")
+library("lattice", lib.loc="~/R/R-3.2.2/library")
+library(AppliedPredictiveModeling)
+data(segmentationOriginal)
+library(caret)
+set.seed(125)
+training <- segmentationOriginal[segmentationOriginal$Case=="Train",][, -2]
+testing <- segmentationOriginal[segmentationOriginal$Case=="Test",][, -2]
+model <- train(Class~., data=training, method="rpart")
+install.packages("rpart")
+install.packages("rpart")
+library("dplyr", lib.loc="~/R/R-3.2.2/library")
+library("rpart", lib.loc="~/R/R-3.2.2/library")
+set.seed(125)
+training <- segmentationOriginal[segmentationOriginal$Case=="Train",][, -2]
+testing <- segmentationOriginal[segmentationOriginal$Case=="Test",][, -2]
+model <- train(Class~., data=training, method="rpart")
+install.packages("e1071")
+libray(e1071)
+library(e1071)
+library(AppliedPredictiveModeling)
+data(segmentationOriginal)
+library(caret)
+set.seed(125)
+training <- segmentationOriginal[segmentationOriginal$Case=="Train",][, -2]
+testing <- segmentationOriginal[segmentationOriginal$Case=="Test",][, -2]
+model <- train(Class~., data=training, method="rpart")
+library(rattle)
+install.packages("rattle")
+library("e1071", lib.loc="~/R/R-3.2.2/library")
+model <- train(Class~., data=training, method="rpart")
+library(AppliedPredictiveModeling)
+data(segmentationOriginal)
+library(caret)
+set.seed(125)
+training <- segmentationOriginal[segmentationOriginal$Case=="Train",][, -2]
+testing <- segmentationOriginal[segmentationOriginal$Case=="Test",][, -2]
+model <- train(Class~., data=training, method="rpart")
+plot(model$finalModel, uniform=TRUE, main="Classification Tree")
+text(model$finalModel, use.n=TRUE, all=TRUE, cex=.8)
+library(rattle)
+library(rattle)
+library(caret)
+?createFolds
+library(pgmm)
+data(olive)
+olive = olive[,-1]
+install.packages("pgmm")
+library(pgmm)
+data(olive)
+olive = olive[,-1]
+head(olive)
+inTrain <- creatDataPartition(y=olive, p=0.7, list=FALSE)
+training <- olive[inTrain,]
+testing <- olive[-inTrain,]
+library(caret)
+inTrain <- creatDataPartition(y=olive, p=0.7, list=FALSE)
+training <- olive[inTrain,]
+testing <- olive[-inTrain,]
+inTrain <- createDataPartition(y=olive, p=0.7, list=FALSE)
+training <- olive[inTrain,]
+testing <- olive[-inTrain,]
+inTrain <- createDataPartition(y=olive$Area, p=0.7, list=FALSE)
+training <- olive[inTrain,]
+testing <- olive[-inTrain,]
+head(training)
+model <- train(Area ~., method="rpart", data=training)
+plot(model$finalModel, uniform=TRUE, main="Classification Tree")
+text(model$finalModel, use.n=TRUE, all=TRUE, cex=.8)
+newdata = as.data.frame(t(colMeans(olive)))
+head(newdata)
+fancyRpartPlot(model$finalModel)
+library(rpart)
+fancyRpartPlot(model$finalModel)
+install.packages("rpart")
+install.packages("rpart")
+install.packages("rpart")
+install.packages("rpart")
+install.packages("rpart")
+install.packages("rpart")
+newdata
+?predict
+predict(model, newdata=testing)
+predict(model, newdata=newdata)
+training
+library(ElemStatLearn)
+data(SAheart)
+set.seed(8484)
+train = sample(1:dim(SAheart)[1],size=dim(SAheart)[1]/2,replace=F)
+trainSA = SAheart[train,]
+testSA = SAheart[-train,]
+install.packages("ElemStatLearn")
+library(ElemStatLearn)
+data(SAheart)
+set.seed(8484)
+train = sample(1:dim(SAheart)[1],size=dim(SAheart)[1]/2,replace=F)
+trainSA = SAheart[train,]
+testSA = SAheart[-train,]
+?train
+head(trainSA)
+model <- train(chd ~., method="glm", data=trainSA, family=binary)
+model <- train(chd ~., method="glm", data=trainSA, family="binary")
+library(caret)
+model <- train(chd ~., method="glm", data=trainSA, family="binary")
+missClass = function(values,prediction){sum(((prediction > 0.5)*1) != values)/length(values)}
+missClass
+prediction <- predict(model, newdata=testSA)
+prediction
+set.seed(13234)
+model <- train(chd ~., method="glm", data=trainSA, family="binomial")
+missClass = function(values,prediction){sum(((prediction > 0.5)*1) != values)/length(values)}
+missClass(trainSA$chd, predict(model, trainSA))
+missClass(testSA$chd, predict(model, testSA))
+library(ElemStatLearn)
+data(vowel.train)
+data(vowel.test)
+?varImp
+training <- vowel.train
+testing <- vowel.test
+head(training)
+vowel.train$y <- factor(vowel.train$y)
+vowel.train$y <- factor(vowel.train$y)
+vowel.test$y <- factor(vowel.test$y)
+set.seed(33833)
+rfmodel <- suppressMessages(train(y~., data=vowel.train, method="rf"))
+rfmodel
+varImp(rfmodel)
+set.seed(33833)
+rfmodel <- suppressMessages(train(y~., data=vowel.train, method="rf"))
+varImp(rfmodel)
+install.packages("Shiny")
+install.packages("shiny")
+library(shiny)
+setwd("Y:/BHubler/R/coursera/shinyproj")
+runApp
+()
+runApp()
+x <- {1:20}
+# mutliplication number is input
+input <- 5
+y <- {input*x}
+plot(x,y)
+input <- 7\
+input <- 7
+plot(x,y)
+x <- {1:20}
+# mutliplication number is input
+input <- 5
+y <- {input*x}
+plot(x,y)
+input <- 7
+y <- {input*x}
+plot(x,y)
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+runApp()
+?plot
+library(ggplot2)
+runApp()
+ggplot(x,y)
+dat <- cbind(x,y)
+g <- ggplot(dat)
+ggplot(aes(x,y))
+ggplot(x~y
+)
+?ggplot
+merge(x,y)
+?merge
+merge(x,y, by.y)
+merge(x,by.y)
+dat <- data.frame(x,y)
+dat
+g <- ggplot(dat, aes(x,y))
+g
+g + geom_point() + geom_line()
+mult <- 1
+x <- {1:20}
+y <- {mult*x}
+plot(x,y)
+```
+```{r}
+library(ggplot2)
+dat <- data.frame(x,y)
+g <- ggplot(dat, aes(x,y))
+g + geom_point() + geom_line()
+g
+dat
+dat <- data.frame(x,y)
+g <- ggplot(dat, aes(x,y))
+g + geom_point() + geom_line()
+mult <- 1
+x <- {1:20}
+y1 <- x
+y2 <- {mult*x}
+dat <- data.frame(x,y1,y2)
+g <- ggplot(dat, aes(x,y))
+g + geom_point() + geom_line()
+g <- ggplot(dat, aes(x,y1))
+g + geom_point() + geom_line()
+g
+dat <- data.frame(x,y1,y2)
+g <- ggplot(dat)
+g + geom_point(x ~ y1) + geom_line(x ~ y2)
+g
+g <- ggplot(dat, aes(x~.))
+g + geom_point(x ~ y1) + geom_line(x ~ y2)
+g
+g <- ggplot(dat)
+g + geom_point(x ~ y1) + geom_line(x ~ y2)
+g
+View(SAheart)
+ult <- 6
+x <- {1:20}
+y1 <- x
+y2 <- {mult*x}
+dat <- data.frame(x,y1,y2)
+dat
+mult <-6
+x <- {1:20}
+y1 <- x
+y2 <- {mult*x}
+dat <- data.frame(x,y1,y2)
+g <- ggplot(dat, aes(x, y1, y2))
+g + geom_point(x ~ y1) + geom_line(x ~ y2)
+g
+?linetype
